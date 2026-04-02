@@ -47,9 +47,9 @@ function uploadImage(string $key, string $subdir = ''): string {
 }
 
 // ─── Actions POST ──────────────────────────────────────────
-$content = loadContent();
+$content  = loadContent();
 $messages = loadMessages();
-$action = $_POST['action'] ?? $_GET['action'] ?? '';
+$action  = $_POST['action'] ?? $_GET['action'] ?? '';
 $section = $_GET['section'] ?? 'dashboard';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -74,6 +74,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: dashboard.php?section=apropos&ok=1'); exit;
     }
 
+    // PHILOSOPHIE
+    if ($action === 'save_philosophie') {
+        foreach ([
+            'titre_approche','texte_approche',
+            'titre_passages','texte_passages',
+            'titre_confiance','texte_confiance',
+            'titre_philosophie','texte_philosophie',
+            'titre_engagement','texte_engagement'
+        ] as $k) {
+            $content['philosophie'][$k] = trim($_POST[$k] ?? '');
+        }
+        saveContent($content);
+        header('Location: dashboard.php?section=philosophie&ok=1'); exit;
+    }
+
     // SERVICES
     if ($action === 'save_service') {
         $id = (int)($_POST['id'] ?? 0);
@@ -92,6 +107,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content['services'] = array_values(array_filter($content['services'], fn($s)=>$s['id']!=$id));
         saveContent($content);
         header('Location: dashboard.php?section=services&ok=1'); exit;
+    }
+
+    // ACCOMPAGNEMENTS
+    if ($action === 'save_accompagnement') {
+        $id = (int)($_POST['id'] ?? 0);
+        $data = ['icone'=>trim($_POST['icone']),'titre'=>trim($_POST['titre']),'description'=>trim($_POST['description']),'actif'=>isset($_POST['actif'])];
+        if ($id === 0) {
+            $data['id'] = nextId($content['Accompagnements'] ?? []);
+            $content['Accompagnements'][] = $data;
+        } else {
+            foreach ($content['Accompagnements'] as &$s) if ($s['id']==$id) { $data['id']=$id; $s=$data; break; }
+        }
+        saveContent($content);
+        header('Location: dashboard.php?section=accompagnements&ok=1'); exit;
+    }
+    if ($action === 'delete_accompagnement') {
+        $id = (int)($_POST['id'] ?? 0);
+        $content['Accompagnements'] = array_values(array_filter($content['Accompagnements'] ?? [], fn($s)=>$s['id']!=$id));
+        saveContent($content);
+        header('Location: dashboard.php?section=accompagnements&ok=1'); exit;
     }
 
     // TARIFS
@@ -182,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: dashboard.php?section=faq&ok=1'); exit;
     }
 
-    // MESSAGES — marquer lu / supprimer
+    // MESSAGES
     if ($action === 'delete_message') {
         $id = (int)($_POST['id'] ?? 0);
         $messages = array_values(array_filter($messages, fn($m)=>$m['id']!=$id));
@@ -197,11 +232,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// ─── Stats rapides ──────────────────────────────────────────
-$unread = count(array_filter($messages, fn($m)=>!($m['lu']??false)));
+// ─── Stats ──────────────────────────────────────────────────
+$unread  = count(array_filter($messages, fn($m)=>!($m['lu']??false)));
 $edit_id = (int)($_GET['edit'] ?? 0);
 
-// ─── Helpers HTML ───────────────────────────────────────────
 function h(string $s): string { return htmlspecialchars($s, ENT_QUOTES); }
 function val(array $data, string $key): string { return h($data[$key] ?? ''); }
 ?>
@@ -243,6 +277,7 @@ function val(array $data, string $key): string { return h($data[$key] ?? ''); }
     /* CARDS */
     .card{background:var(--white);border-radius:8px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 2px 12px rgba(120,90,70,.06);}
     .card-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:400;color:var(--text);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--cream-dark);}
+    .card-subtitle{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--taupe-dark);margin:1.8rem 0 1rem;padding-top:1.5rem;border-top:1px dashed var(--cream-dark);}
 
     /* STATS */
     .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
@@ -256,6 +291,7 @@ function val(array $data, string $key): string { return h($data[$key] ?? ''); }
     input[type=text],input[type=email],input[type=tel],input[type=date],input[type=url],textarea,select{width:100%;border:1px solid rgba(160,136,120,.3);border-radius:4px;padding:.75rem 1rem;font-family:'Jost',sans-serif;font-size:.9rem;color:var(--text);background:var(--cream);outline:none;transition:border-color .2s;}
     input:focus,textarea:focus,select:focus{border-color:var(--taupe);}
     textarea{resize:vertical;min-height:100px;}
+    textarea.tall{min-height:160px;}
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
     .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
     .checkbox-group{display:flex;align-items:center;gap:.6rem;}
@@ -273,7 +309,7 @@ function val(array $data, string $key): string { return h($data[$key] ?? ''); }
     .btn-outline{background:transparent;border:1px solid var(--taupe-light);color:var(--taupe);}
     .btn-outline:hover{background:var(--cream);}
 
-    /* TABLES / LISTS */
+    /* ITEMS LIST */
     .items-list{display:flex;flex-direction:column;gap:.8rem;}
     .item-row{background:var(--cream);border-radius:6px;padding:1rem 1.2rem;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;}
     .item-row.inactive{opacity:.5;}
@@ -295,11 +331,11 @@ function val(array $data, string $key): string { return h($data[$key] ?? ''); }
     .msg-body{font-size:.88rem;color:var(--text-mid);font-weight:300;line-height:1.7;margin-bottom:.8rem;}
     .msg-actions{display:flex;gap:.5rem;}
 
-    /* MODAL / INLINE FORM */
-    .inline-form{background:var(--cream-dark);border-radius:8px;padding:1.5rem;margin-top:1rem;border:1px solid rgba(160,136,120,.2);}
-    .inline-form .card-title{font-size:1.1rem;margin-bottom:1rem;}
+    /* PHILOSOPHIE PREVIEW */
+    .philo-preview{background:var(--cream);border-left:3px solid var(--taupe-light);border-radius:0 4px 4px 0;padding:1rem 1.2rem;margin-bottom:1rem;}
+    .philo-preview-title{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--taupe-dark);margin-bottom:.3rem;}
+    .philo-preview-text{font-size:.82rem;color:var(--text-mid);font-weight:300;line-height:1.6;}
 
-    /* RESPONSIVE */
     @media(max-width:900px){
       .sidebar{transform:translateX(-100%);transition:.3s;}
       .sidebar.open{transform:none;}
@@ -319,15 +355,17 @@ function val(array $data, string $key): string { return h($data[$key] ?? ''); }
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section">Navigation</div>
-    <a href="dashboard.php?section=dashboard" class="nav-link <?= $section==='dashboard'?'active':'' ?>"><span class="icon">🏠</span> Tableau de bord</a>
+    <a href="dashboard.php?section=dashboard"      class="nav-link <?= $section==='dashboard'?'active':'' ?>"><span class="icon">🏠</span> Tableau de bord</a>
     <div class="nav-section">Contenu</div>
-    <a href="dashboard.php?section=site"        class="nav-link <?= $section==='site'?'active':'' ?>"><span class="icon">⚙️</span> Informations site</a>
-    <a href="dashboard.php?section=apropos"     class="nav-link <?= $section==='apropos'?'active':'' ?>"><span class="icon">👩</span> À propos</a>
-    <a href="dashboard.php?section=services"    class="nav-link <?= $section==='services'?'active':'' ?>"><span class="icon">🌸</span> Services</a>
-    <a href="dashboard.php?section=tarifs"      class="nav-link <?= $section==='tarifs'?'active':'' ?>"><span class="icon">💶</span> Tarifs</a>
-    <a href="dashboard.php?section=temoignages" class="nav-link <?= $section==='temoignages'?'active':'' ?>"><span class="icon">💬</span> Témoignages</a>
-    <a href="dashboard.php?section=blog"        class="nav-link <?= $section==='blog'?'active':'' ?>"><span class="icon">📝</span> Blog</a>
-    <a href="dashboard.php?section=faq"         class="nav-link <?= $section==='faq'?'active':'' ?>"><span class="icon">❓</span> FAQ</a>
+    <a href="dashboard.php?section=site"           class="nav-link <?= $section==='site'?'active':'' ?>"><span class="icon">⚙️</span> Informations site</a>
+    <a href="dashboard.php?section=apropos"        class="nav-link <?= $section==='apropos'?'active':'' ?>"><span class="icon">👩</span> À propos</a>
+    <a href="dashboard.php?section=philosophie"    class="nav-link <?= $section==='philosophie'?'active':'' ?>"><span class="icon">🌿</span> Ma philosophie</a>
+    <a href="dashboard.php?section=accompagnements" class="nav-link <?= $section==='accompagnements'?'active':'' ?>"><span class="icon">🌸</span> Accompagnements</a>
+    <a href="dashboard.php?section=services"       class="nav-link <?= $section==='services'?'active':'' ?>"><span class="icon">🤝</span> Services</a>
+    <a href="dashboard.php?section=tarifs"         class="nav-link <?= $section==='tarifs'?'active':'' ?>"><span class="icon">💶</span> Tarifs</a>
+    <a href="dashboard.php?section=temoignages"    class="nav-link <?= $section==='temoignages'?'active':'' ?>"><span class="icon">💬</span> Témoignages</a>
+    <a href="dashboard.php?section=blog"           class="nav-link <?= $section==='blog'?'active':'' ?>"><span class="icon">📝</span> Blog</a>
+    <a href="dashboard.php?section=faq"            class="nav-link <?= $section==='faq'?'active':'' ?>"><span class="icon">❓</span> FAQ</a>
     <div class="nav-section">Communications</div>
     <a href="dashboard.php?section=messages" class="nav-link <?= $section==='messages'?'active':'' ?>">
       <span class="icon">✉️</span> Messages
@@ -348,9 +386,9 @@ function val(array $data, string $key): string { return h($data[$key] ?? ''); }
 <?php endif; ?>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // DASHBOARD
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 if ($section === 'dashboard'):
 ?>
 <div class="page-header">
@@ -358,7 +396,7 @@ if ($section === 'dashboard'):
   <p>Bienvenue dans votre espace d'administration.</p>
 </div>
 <div class="stats-grid">
-  <div class="stat-card"><div class="stat-num"><?= count($content['services']??[]) ?></div><div class="stat-label">Services</div></div>
+  <div class="stat-card"><div class="stat-num"><?= count($content['Accompagnements']??[]) ?></div><div class="stat-label">Accompagnements</div></div>
   <div class="stat-card"><div class="stat-num"><?= count($content['temoignages']??[]) ?></div><div class="stat-label">Témoignages</div></div>
   <div class="stat-card"><div class="stat-num"><?= count($content['blog']??[]) ?></div><div class="stat-label">Articles</div></div>
   <div class="stat-card"><div class="stat-num" style="color:<?= $unread>0?'var(--red)':'var(--taupe-dark)' ?>"><?= $unread ?></div><div class="stat-label">Messages non lus</div></div>
@@ -366,18 +404,19 @@ if ($section === 'dashboard'):
 <div class="card">
   <div class="card-title">Accès rapides</div>
   <div style="display:flex;gap:.8rem;flex-wrap:wrap;">
-    <a href="dashboard.php?section=site" class="btn btn-outline">⚙️ Modifier les infos</a>
-    <a href="dashboard.php?section=blog&new=1" class="btn btn-primary">✏️ Nouvel article</a>
+    <a href="dashboard.php?section=site"        class="btn btn-outline">⚙️ Infos du site</a>
+    <a href="dashboard.php?section=philosophie" class="btn btn-outline">🌿 Ma philosophie</a>
+    <a href="dashboard.php?section=blog&new=1"  class="btn btn-primary">✏️ Nouvel article</a>
     <a href="dashboard.php?section=temoignages&new=1" class="btn btn-primary">💬 Ajouter un témoignage</a>
-    <a href="dashboard.php?section=messages" class="btn btn-outline">✉️ Voir les messages</a>
-    <a href="index.php" target="_blank" class="btn btn-outline">👁️ Voir le site</a>
+    <a href="dashboard.php?section=messages"    class="btn btn-outline">✉️ Voir les messages</a>
+    <a href="index.php" target="_blank"         class="btn btn-outline">👁️ Voir le site</a>
   </div>
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // SITE GENERAL
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'site'):
   $s = $content['site'] ?? [];
 ?>
@@ -387,7 +426,7 @@ elseif ($section === 'site'):
     <input type="hidden" name="action" value="save_site"/>
     <div class="form-row">
       <div class="form-group"><label>Nom du site</label><input type="text" name="nom" value="<?= val($s,'nom') ?>"/></div>
-      <div class="form-group"><label>Slogan</label><input type="text" name="slogan" value="<?= val($s,'slogan') ?>"/></div>
+      <div class="form-group"><label>Slogan (hero)</label><input type="text" name="slogan" value="<?= val($s,'slogan') ?>"/></div>
     </div>
     <div class="form-group"><label>Description (hero)</label><textarea name="description"><?= val($s,'description') ?></textarea></div>
     <div class="form-row">
@@ -415,20 +454,20 @@ elseif ($section === 'site'):
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // À PROPOS
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'apropos'):
   $a = $content['apropos'] ?? [];
 ?>
-<div class="page-header"><h1>À propos</h1><p>Votre présentation et vos valeurs.</p></div>
+<div class="page-header"><h1>À propos</h1><p>Votre présentation et parcours.</p></div>
 <div class="card">
   <form method="POST">
     <input type="hidden" name="action" value="save_apropos"/>
     <div class="form-group"><label>Titre de la section</label><input type="text" name="titre" value="<?= val($a,'titre') ?>"/></div>
-    <div class="form-group"><label>Paragraphe 1</label><textarea name="texte1"><?= val($a,'texte1') ?></textarea></div>
-    <div class="form-group"><label>Paragraphe 2</label><textarea name="texte2"><?= val($a,'texte2') ?></textarea></div>
-    <div class="form-group"><label>Paragraphe 3</label><textarea name="texte3"><?= val($a,'texte3') ?></textarea></div>
+    <div class="form-group"><label>Paragraphe 1 — Présentation générale</label><textarea class="tall" name="texte1"><?= val($a,'texte1') ?></textarea></div>
+    <div class="form-group"><label>Paragraphe 2 — Cadre associatif</label><textarea name="texte2"><?= val($a,'texte2') ?></textarea></div>
+    <div class="form-group"><label>Paragraphe 3 — Pourquoi l'appel de la doula</label><textarea class="tall" name="texte3"><?= val($a,'texte3') ?></textarea></div>
     <div class="form-group">
       <label>Valeurs (une par ligne)</label>
       <textarea name="valeurs" style="min-height:120px"><?= h(implode("\n", $a['valeurs']??[])) ?></textarea>
@@ -438,9 +477,142 @@ elseif ($section === 'apropos'):
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
+// PHILOSOPHIE
+// ══════════════════════════════════════════════════════════
+elseif ($section === 'philosophie'):
+  $phi = $content['philosophie'] ?? [];
+?>
+<div class="page-header">
+  <h1>Ma philosophie</h1>
+  <p>Gérez les 5 blocs texte de la section "Ma philosophie" affichée sur le site.</p>
+</div>
+
+<div class="card">
+  <form method="POST">
+    <input type="hidden" name="action" value="save_philosophie"/>
+
+    <!-- BLOC 1 : Approche humaine -->
+    <div class="card-title">🤝 Bloc 1 — Approche humaine et personnalisée</div>
+    <div class="form-row">
+      <div class="form-group"><label>Titre</label><input type="text" name="titre_approche" value="<?= val($phi,'titre_approche') ?>"/></div>
+    </div>
+    <div class="form-group"><label>Texte</label><textarea name="texte_approche"><?= val($phi,'texte_approche') ?></textarea></div>
+
+    <!-- BLOC 2 : Passages de vie -->
+    <div class="card-subtitle">🌱 Bloc 2 — Soutenir vos grands passages de vie</div>
+    <div class="form-row">
+      <div class="form-group"><label>Titre</label><input type="text" name="titre_passages" value="<?= val($phi,'titre_passages') ?>"/></div>
+    </div>
+    <div class="form-group"><label>Texte</label><textarea name="texte_passages"><?= val($phi,'texte_passages') ?></textarea></div>
+
+    <!-- BLOC 3 : La confiance -->
+    <div class="card-subtitle">✨ Bloc 3 — La confiance, votre plus belle ressource</div>
+    <div class="form-row">
+      <div class="form-group"><label>Titre</label><input type="text" name="titre_confiance" value="<?= val($phi,'titre_confiance') ?>"/></div>
+    </div>
+    <div class="form-group"><label>Texte</label><textarea name="texte_confiance"><?= val($phi,'texte_confiance') ?></textarea></div>
+
+    <!-- BLOC 4 : Philosophie complète -->
+    <div class="card-subtitle">🌿 Bloc 4 — Ma philosophie d'accompagnement bienveillant</div>
+    <div class="form-row">
+      <div class="form-group"><label>Titre</label><input type="text" name="titre_philosophie" value="<?= val($phi,'titre_philosophie') ?>"/></div>
+    </div>
+    <div class="form-group"><label>Texte complet</label><textarea class="tall" name="texte_philosophie"><?= val($phi,'texte_philosophie') ?></textarea></div>
+
+    <!-- BLOC 5 : Engagement -->
+    <div class="card-subtitle">💛 Bloc 5 — Confiance et sécurité : mon engagement pour vous</div>
+    <div class="form-row">
+      <div class="form-group"><label>Titre</label><input type="text" name="titre_engagement" value="<?= val($phi,'titre_engagement') ?>"/></div>
+    </div>
+    <div class="form-group"><label>Texte complet</label><textarea class="tall" name="texte_engagement"><?= val($phi,'texte_engagement') ?></textarea></div>
+
+    <div style="margin-top:1.5rem;">
+      <button type="submit" class="btn btn-primary">💾 Enregistrer toute la section</button>
+    </div>
+  </form>
+</div>
+
+<!-- Aperçu des blocs actuels -->
+<?php if(!empty($phi)): ?>
+<div class="card">
+  <div class="card-title">Aperçu des contenus actuels</div>
+  <?php
+  $blocs = [
+    ['titre_approche','texte_approche','🤝 Approche humaine'],
+    ['titre_passages','texte_passages','🌱 Passages de vie'],
+    ['titre_confiance','texte_confiance','✨ La confiance'],
+    ['titre_philosophie','texte_philosophie','🌿 Philosophie complète'],
+    ['titre_engagement','texte_engagement','💛 Engagement'],
+  ];
+  foreach($blocs as [$tk, $vk, $label]):
+    if(!empty($phi[$tk])):
+  ?>
+  <div class="philo-preview">
+    <div class="philo-preview-title"><?= $label ?> — <?= h($phi[$tk]) ?></div>
+    <div class="philo-preview-text"><?= h(mb_substr($phi[$vk]??'',0,120)) ?>…</div>
+  </div>
+  <?php endif; endforeach; ?>
+</div>
+<?php endif; ?>
+
+<?php
+// ══════════════════════════════════════════════════════════
+// ACCOMPAGNEMENTS
+// ══════════════════════════════════════════════════════════
+elseif ($section === 'accompagnements'):
+  $show_new = isset($_GET['new']) || $edit_id > 0;
+  $edit_item = $edit_id > 0 ? current(array_filter($content['Accompagnements']??[], fn($s)=>$s['id']==$edit_id)) : null;
+?>
+<div class="page-header"><h1>Accompagnements</h1><p>Les cartes d'accompagnements affichées sur le site.</p></div>
+<div style="margin-bottom:1rem;"><a href="dashboard.php?section=accompagnements&new=1" class="btn btn-primary">+ Ajouter un accompagnement</a></div>
+
+<?php if($show_new): ?>
+<div class="card">
+  <div class="card-title"><?= $edit_item ? 'Modifier' : 'Nouvel accompagnement' ?></div>
+  <form method="POST">
+    <input type="hidden" name="action" value="save_accompagnement"/>
+    <input type="hidden" name="id" value="<?= $edit_item['id']??0 ?>"/>
+    <div class="form-row">
+      <div class="form-group"><label>Icône (emoji)</label><input type="text" name="icone" value="<?= val($edit_item??[],'icone') ?>"/></div>
+      <div class="form-group"><label>Titre</label><input type="text" name="titre" value="<?= val($edit_item??[],'titre') ?>"/></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea name="description"><?= val($edit_item??[],'description') ?></textarea></div>
+    <div class="checkbox-group form-group"><input type="checkbox" name="actif" id="actif_a" <?= ($edit_item['actif']??true)?'checked':'' ?>/><label for="actif_a">Visible sur le site</label></div>
+    <div style="display:flex;gap:.8rem;">
+      <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+      <a href="dashboard.php?section=accompagnements" class="btn btn-outline">Annuler</a>
+    </div>
+  </form>
+</div>
+<?php endif; ?>
+
+<div class="card">
+  <div class="card-title">Accompagnements (<?= count($content['Accompagnements']??[]) ?>)</div>
+  <div class="items-list">
+    <?php foreach($content['Accompagnements']??[] as $sv): ?>
+    <div class="item-row <?= !($sv['actif']??true)?'inactive':'' ?>">
+      <div class="item-main">
+        <div class="item-title"><?= h($sv['icone']??'') ?> <?= h($sv['titre']??'') ?> <?= !($sv['actif']??true)?'<span class="tag red">Masqué</span>':'' ?></div>
+        <div class="item-desc"><?= h(mb_substr($sv['description']??'',0,100)) ?>...</div>
+      </div>
+      <div class="item-actions">
+        <a href="dashboard.php?section=accompagnements&edit=<?= $sv['id'] ?>" class="btn btn-sm btn-outline">✏️ Modifier</a>
+        <form method="POST" onsubmit="return confirm('Supprimer ?')">
+          <input type="hidden" name="action" value="delete_accompagnement"/>
+          <input type="hidden" name="id" value="<?= $sv['id'] ?>"/>
+          <button class="btn btn-sm btn-danger">🗑️</button>
+        </form>
+      </div>
+    </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+
+<?php
+// ══════════════════════════════════════════════════════════
 // SERVICES
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'services'):
   $show_new = isset($_GET['new']) || $edit_id > 0;
   $edit_item = $edit_id > 0 ? current(array_filter($content['services']??[], fn($s)=>$s['id']==$edit_id)) : null;
@@ -471,17 +643,17 @@ elseif ($section === 'services'):
 <div class="card">
   <div class="card-title">Services (<?= count($content['services']??[]) ?>)</div>
   <div class="items-list">
-    <?php foreach($content['services']??[] as $s): ?>
-    <div class="item-row <?= !($s['actif']??true)?'inactive':'' ?>">
+    <?php foreach($content['services']??[] as $sv): ?>
+    <div class="item-row <?= !($sv['actif']??true)?'inactive':'' ?>">
       <div class="item-main">
-        <div class="item-title"><?= h($s['icone']??'') ?> <?= h($s['titre']??'') ?> <?= !($s['actif']??true)?'<span class="tag red">Masqué</span>':'' ?></div>
-        <div class="item-desc"><?= h(mb_substr($s['description']??'',0,100)) ?>...</div>
+        <div class="item-title"><?= h($sv['icone']??'') ?> <?= h($sv['titre']??'') ?> <?= !($sv['actif']??true)?'<span class="tag red">Masqué</span>':'' ?></div>
+        <div class="item-desc"><?= h(mb_substr($sv['description']??'',0,100)) ?>...</div>
       </div>
       <div class="item-actions">
-        <a href="dashboard.php?section=services&edit=<?= $s['id'] ?>" class="btn btn-sm btn-outline">✏️ Modifier</a>
+        <a href="dashboard.php?section=services&edit=<?= $sv['id'] ?>" class="btn btn-sm btn-outline">✏️ Modifier</a>
         <form method="POST" onsubmit="return confirm('Supprimer ce service ?')">
           <input type="hidden" name="action" value="delete_service"/>
-          <input type="hidden" name="id" value="<?= $s['id'] ?>"/>
+          <input type="hidden" name="id" value="<?= $sv['id'] ?>"/>
           <button class="btn btn-sm btn-danger">🗑️</button>
         </form>
       </div>
@@ -491,9 +663,9 @@ elseif ($section === 'services'):
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // TARIFS
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'tarifs'):
   $show_new = isset($_GET['new']) || $edit_id > 0;
   $edit_item = $edit_id > 0 ? current(array_filter($content['tarifs']??[], fn($t)=>$t['id']==$edit_id)) : null;
@@ -548,9 +720,9 @@ elseif ($section === 'tarifs'):
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // TÉMOIGNAGES
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'temoignages'):
   $show_new = isset($_GET['new']) || $edit_id > 0;
   $edit_item = $edit_id > 0 ? current(array_filter($content['temoignages']??[], fn($t)=>$t['id']==$edit_id)) : null;
@@ -569,7 +741,7 @@ elseif ($section === 'temoignages'):
       <div class="form-group"><label>Détail (ex: maman de 2 enfants)</label><input type="text" name="detail" value="<?= val($edit_item??[],'detail') ?>"/></div>
     </div>
     <div class="form-group"><label>Emoji avatar</label><input type="text" name="icone" value="<?= val($edit_item??[],'icone') ?: '🌸' ?>"/></div>
-    <div class="form-group"><label>Témoignage</label><textarea name="texte" style="min-height:120px"><?= val($edit_item??[],'texte') ?></textarea></div>
+    <div class="form-group"><label>Témoignage</label><textarea class="tall" name="texte"><?= val($edit_item??[],'texte') ?></textarea></div>
     <div class="checkbox-group form-group"><input type="checkbox" name="actif" id="actif_t" <?= ($edit_item['actif']??true)?'checked':'' ?>/><label for="actif_t">Visible sur le site</label></div>
     <div style="display:flex;gap:.8rem;">
       <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
@@ -602,9 +774,9 @@ elseif ($section === 'temoignages'):
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // BLOG
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'blog'):
   $show_new = isset($_GET['new']) || $edit_id > 0;
   $edit_item = $edit_id > 0 ? current(array_filter($content['blog']??[], fn($b)=>$b['id']==$edit_id)) : null;
@@ -628,7 +800,7 @@ elseif ($section === 'blog'):
       <div class="form-group"><label>Date de publication</label><input type="date" name="date" value="<?= val($edit_item??[],'date') ?>"/></div>
     </div>
     <div class="form-group"><label>Résumé (affiché sur la liste)</label><textarea name="resume"><?= val($edit_item??[],'resume') ?></textarea></div>
-    <div class="form-group"><label>Contenu complet</label><textarea name="contenu" style="min-height:200px"><?= val($edit_item??[],'contenu') ?></textarea></div>
+    <div class="form-group"><label>Contenu complet</label><textarea class="tall" name="contenu"><?= val($edit_item??[],'contenu') ?></textarea></div>
     <div class="form-group">
       <label>Photo de l'article</label>
       <?php if(!empty($edit_item['photo'])): ?>
@@ -668,9 +840,9 @@ elseif ($section === 'blog'):
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // FAQ
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'faq'):
   $show_new = isset($_GET['new']) || $edit_id > 0;
   $edit_item = $edit_id > 0 ? current(array_filter($content['faq']??[], fn($f)=>$f['id']==$edit_id)) : null;
@@ -685,7 +857,7 @@ elseif ($section === 'faq'):
     <input type="hidden" name="action" value="save_faq"/>
     <input type="hidden" name="id" value="<?= $edit_item['id']??0 ?>"/>
     <div class="form-group"><label>Question</label><input type="text" name="question" value="<?= val($edit_item??[],'question') ?>"/></div>
-    <div class="form-group"><label>Réponse</label><textarea name="reponse" style="min-height:120px"><?= val($edit_item??[],'reponse') ?></textarea></div>
+    <div class="form-group"><label>Réponse</label><textarea class="tall" name="reponse"><?= val($edit_item??[],'reponse') ?></textarea></div>
     <div class="checkbox-group form-group"><input type="checkbox" name="actif" id="actif_f" <?= ($edit_item['actif']??true)?'checked':'' ?>/><label for="actif_f">Visible sur le site</label></div>
     <div style="display:flex;gap:.8rem;">
       <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
@@ -718,9 +890,9 @@ elseif ($section === 'faq'):
 </div>
 
 <?php
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 // MESSAGES
-// ════════════════════════════════════════════════════════════
+// ══════════════════════════════════════════════════════════
 elseif ($section === 'messages'):
 ?>
 <div class="page-header"><h1>Messages reçus</h1><p><?= $unread ?> message<?= $unread>1?'s':'' ?> non lu<?= $unread>1?'s':'' ?>.</p></div>
