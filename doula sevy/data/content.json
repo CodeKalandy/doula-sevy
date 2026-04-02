@@ -1,0 +1,210 @@
+{
+    "site": {
+        "nom": "Lumière de Vie – Doula Sév",
+        "slogan": "Un accompagnement doux, bienveillant et personnalisé",
+        "description": "Un accompagnement doux, bienveillant et personnalisé tout au long de votre grossesse, de votre accouchement et de vos premiers instants de vie avec votre bébé.",
+        "ville": "Saint-Brice-Courcelles et ses alentours",
+        "telephone": "",
+        "email": "lumieredevie.doulasevy@gmail.com",
+        "calendly": "",
+        "instagram": "https:\/\/www.instagram.com\/lumiere_de_vie_doula_sevy\/",
+        "facebook": "",
+        "photo_sevy": "uploads\/photos\/img_69bc4d7e4b145.webp"
+    },
+    "apropos": {
+        "titre": "Je suis Sévy, votre doula de cœur",
+        "texte1": "Passionnée par la naissance et le pouvoir des femmes, je suis devenue doula après un chemin de vie qui m'a profondément transformée. Accompagner les familles dans cette période si précieuse est ma vocation.",
+        "texte2": "Basée à Saint-Brice-Courcelles et ses alentours, j'offre un soutien chaleureux, non médical, et centré sur vos besoins. Chaque famille est unique, chaque naissance est sacrée.",
+        "texte3": "Je crois que chaque femme mérite de vivre sa maternité avec confiance, entourée et en pleine lumière. C'est ce que je vous offre, de tout mon cœur.",
+        "valeurs": [
+            "Bienveillance",
+            "Écoute",
+            "Douceur",
+            "Respect",
+            "Authenticité"
+        ]
+    },
+    "services": [
+        {
+            "id": 1,
+            "icone": "🤱",
+            "titre": "Accompagnement prénatal",
+            "description": "Des rencontres régulières pendant votre grossesse pour vous préparer en douceur, répondre à vos questions et nourrir votre confiance en vous.",
+            "actif": true
+        },
+        {
+            "id": 2,
+            "icone": "🌸",
+            "titre": "Accompagnement à l'accouchement",
+            "description": "Je suis à vos côtés le jour J pour vous soutenir, vous encourager et veiller à ce que votre expérience soit la plus belle possible.",
+            "actif": true
+        },
+        {
+            "id": 3,
+            "icone": "🌙",
+            "titre": "Suivi postnatal",
+            "description": "Le retour à la maison est une étape délicate. Je vous accompagne dans vos premiers jours avec bébé, à votre rythme et selon vos besoins.",
+            "actif": true
+        },
+        {
+            "id": 4,
+            "icone": "🌿",
+            "titre": "Préparation à la naissance",
+            "description": "Des séances de préparation holistique pour aborder l'accouchement avec sérénité : respiration, visualisation, positionnement et bien plus.",
+            "actif": true
+        },
+        {
+            "id": 5,
+            "icone": "🍼",
+            "titre": "Soutien à l'allaitement",
+            "description": "Que vous choisissiez d'allaiter ou non, je vous accompagne avec bienveillance dans votre chemin d'alimentation de bébé sans jugement.",
+            "actif": true
+        },
+        {
+            "id": 6,
+            "icone": "👥",
+            "titre": "Ateliers en groupe",
+            "description": "Des cercles de femmes et ateliers thématiques pour partager, se ressourcer et créer des liens avec d'autres mamans de votre région.",
+            "actif": true
+        }
+    ],
+    "tarifs": [
+        {
+            "titre": "Prénatal",
+            "prix": "À définir",
+            "note": "à compléter",
+            "featured": false,
+            "features": [
+                "Entretien de découverte offert",
+                "Nombre de séances à définir",
+                "Durée à préciser",
+                "Zone géographique incluse"
+            ],
+            "id": 1
+        },
+        {
+            "id": 2,
+            "titre": "Accompagnement complet",
+            "prix": "Sur devis",
+            "note": "prénatal + accouchement + postnatal",
+            "featured": true,
+            "features": [
+                "Accompagnement global personnalisé",
+                "Disponibilité 24h\/24 autour du terme",
+                "Suivi postnatal inclus",
+                "Package sur mesure"
+            ]
+        },
+        {
+            "id": 3,
+            "titre": "Postnatal",
+            "prix": "À définir",
+            "note": "à compléter",
+            "featured": false,
+            "features": [
+                "Visites à domicile",
+                "Soutien allaitement inclus",
+                "Fréquence adaptée",
+                "Durée flexible"
+            ]
+        }
+    ],
+    "temoignages": [
+        {
+            "texte": "Séverine, douce Sévy, est une Doula au grand cœur. Écoute, patience et douceur l’accompagnent au quotidien.\r\nPeu importe l’histoire traversée… pour Sévy chaque histoire est unique et mérite d’être écoutée, entendue et épaulée quand cela est nécessaire. Sans jugement, on se sent écoutée, rassurée, comprise.\r\nMerci Sévy.",
+            "auteur": "Margaux Leroux",
+            "detail": "Témoignage à compléter",
+            "icone": "🌸",
+            "actif": true,
+            "id": 1
+        },
+        {
+            "texte": "Les personnes accompagnées par Séverine ont vraiment beaucoup de chance. Elle est douce, à l’écoute, et a une présence profondément rassurante. Elle est une doula attentive, respectueuse et très fiable. C’est une professionnelle de confiance, que je recommanderais sans hésiter.",
+            "auteur": "Lindsey Robrecht",
+            "detail": "",
+            "icone": "🌷",
+            "actif": true,
+            "id": 2
+        },
+        {
+            "texte": "Doula Sévy, une doula que j’admire profondément pour la qualité de son écoute, sa grande justesse et la sagesse qu’elle dégage.\r\nSa présence est rare et précieuse, toujours enveloppante, rassurante, profondément humaine.\r\nVous pouvez vous tourner vers elle en tout confiance, elle fait partie de celles qui savent, qui soutiennent sans juger, qui sont là avec le cœur et le corps.\r\nUne présence sur laquelle on peut vraiment s’appuyer.",
+            "auteur": "Marion Schlaeflin",
+            "detail": "Témoignage à compléter",
+            "icone": "🌻",
+            "actif": true,
+            "id": 3
+        },
+        {
+            "texte": "Séverine est rassurante et bienveillante. Je recommande son accompagnement",
+            "auteur": "Marlène Garrido",
+            "detail": "",
+            "icone": "🌸",
+            "actif": true,
+            "id": 4
+        }
+    ],
+    "blog": [
+        {
+            "id": 1,
+            "icone": "🌸",
+            "tag": "Grossesse",
+            "titre": "Titre de l'article à compléter",
+            "resume": "Résumé de l'article en quelques lignes. Partagez ici vos conseils, expériences ou réflexions sur la maternité...",
+            "contenu": "Contenu complet de l'article à rédiger...",
+            "date": "2025-01-01",
+            "actif": true
+        },
+        {
+            "id": 2,
+            "icone": "🤱",
+            "tag": "Naissance",
+            "titre": "Titre de l'article à compléter",
+            "resume": "Résumé de l'article en quelques lignes. Partagez ici vos conseils, expériences ou réflexions sur la maternité...",
+            "contenu": "Contenu complet de l'article à rédiger...",
+            "date": "2025-01-01",
+            "actif": true
+        },
+        {
+            "id": 3,
+            "icone": "🌿",
+            "tag": "Postnatal",
+            "titre": "Titre de l'article à compléter",
+            "resume": "Résumé de l'article en quelques lignes. Partagez ici vos conseils, expériences ou réflexions sur la maternité...",
+            "contenu": "Contenu complet de l'article à rédiger...",
+            "date": "2025-01-01",
+            "actif": true
+        }
+    ],
+    "faq": [
+        {
+            "id": 1,
+            "question": "Qu'est-ce qu'une doula exactement ?",
+            "reponse": "Une doula est une professionnelle de l'accompagnement à la naissance. Elle apporte un soutien émotionnel, physique et informatif à la future mère et à sa famille tout au long de la grossesse, de l'accouchement et du post-partum. Elle ne remplace pas les professionnels de santé mais les complète.",
+            "actif": true
+        },
+        {
+            "id": 2,
+            "question": "À quel moment contacter une doula ?",
+            "reponse": "Il n'est jamais trop tôt ni trop tard ! Idéalement, dès le début de la grossesse pour profiter d'un accompagnement complet. Mais certaines familles font appel à moi seulement pour le postnatal ou même en fin de grossesse.",
+            "actif": true
+        },
+        {
+            "id": 3,
+            "question": "Êtes-vous présente pendant tout l'accouchement ?",
+            "reponse": "Oui ! Je suis disponible 24h\/24 autour de votre terme. Je vous rejoins dès que vous en ressentez le besoin et reste à vos côtés tout au long du travail et de la naissance.",
+            "actif": true
+        },
+        {
+            "id": 4,
+            "question": "Quelle est votre zone d'intervention ?",
+            "reponse": "J'interviens principalement à Saint-Brice-Courcelles et dans les alentours. N'hésitez pas à me contacter pour vérifier si je peux me déplacer jusqu'à vous.",
+            "actif": true
+        },
+        {
+            "id": 5,
+            "question": "Le conjoint peut-il être présent ?",
+            "reponse": "Absolument ! La doula accompagne la famille entière. Je travaille en étroite collaboration avec le partenaire pour que tout le monde se sente inclus, soutenu et valorisé dans cette belle aventure.",
+            "actif": true
+        }
+    ]
+}

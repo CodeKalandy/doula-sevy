@@ -1,0 +1,24 @@
+# Forcer HTTPS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Bloquer l'accès direct aux fichiers sensibles
+<FilesMatch "(config\.php|\.json)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protéger le dossier data
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^data/ - [F,L]
+</IfModule>
+
+# Désactiver l'affichage des répertoires
+Options -Indexes
+
+# Charset UTF-8
+AddDefaultCharset UTF-8
