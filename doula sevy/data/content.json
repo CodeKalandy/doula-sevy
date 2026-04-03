@@ -1,8 +1,8 @@
 {
     "site": {
-        "nom": "Lumière de Vie – Doula Sév",
-        "slogan": "Un accompagnement doux, bienveillant et personnalisé",
-        "description": "Un accompagnement doux, bienveillant et personnalisé tout au long de votre grossesse, de votre accouchement et de vos premiers instants de vie avec votre bébé.",
+        "nom": "Lumière de Vie – Doula Sévy",
+        "slogan": "Votre voyage parental, une présence authentique",
+        "description": "Chez Lumière de vie Doula Sévy, chaque accompagnement est unique. Fort d'une écoute profonde et d'une riche expérience de vie en tant qu'assistante maternelle, mère de six enfants et grand-mère, j'offre un soutien sans jugement, respectueux de votre histoire. Découvrez mon approche personnalisée pour naviguer les passages de la parentalité.",
         "ville": "Saint-Brice-Courcelles et ses alentours",
         "telephone": "",
         "email": "lumieredevie.doulasevy@gmail.com",
@@ -12,10 +12,10 @@
         "photo_sevy": "uploads\/photos\/img_69bc4d7e4b145.webp"
     },
     "apropos": {
-        "titre": "Je suis Sévy, votre doula de cœur",
-        "texte1": "Passionnée par la naissance et le pouvoir des femmes, je suis devenue doula après un chemin de vie qui m'a profondément transformée. Accompagner les familles dans cette période si précieuse est ma vocation.",
-        "texte2": "Basée à Saint-Brice-Courcelles et ses alentours, j'offre un soutien chaleureux, non médical, et centré sur vos besoins. Chaque famille est unique, chaque naissance est sacrée.",
-        "texte3": "Je crois que chaque femme mérite de vivre sa maternité avec confiance, entourée et en pleine lumière. C'est ce que je vous offre, de tout mon cœur.",
+        "titre": "Mon chemin vers l'accompagnement : Lumière de vie Doula Sévy",
+        "texte1": "Je suis Doula Sévy, accompagnante en périnatalité et parentalité à St Brice Courcelles (51) France. Mon parcours est tissé de moments de vie intenses, d'expériences riches en tant que femme, mère, assistante maternelle, et aussi grand-mère. Ces expériences ont façonné mon désir profond d'accompagner les familles, du désir d'enfant au post-partum, en passant par les défis de la parentalité. Lumière de vie Doula Sévy est née de cette évidence : offrir une présence, une écoute bienveillante, et un soutien authentique à chaque étape de votre vie de parent.",
+        "texte2": "Dans le cadre individuel mais surtout associatif.",
+        "texte3": "L'envie de devenir doula s'est construite au fil de ma vie, bien avant la formation. J'ai accompagné des familles pendant de nombreuses années, dans le quotidien, l'allaitement, le sommeil, les débuts parfois fragiles de la parentalité. J'ai été témoin de leurs joies, de leurs doutes, et parfois de leurs épuisements. J'ai compris que ce qui manquait le plus n'était pas des conseils supplémentaires, mais une présence, une écoute, un espace où déposer sans jugement. Mes propres maternités, de transformation du corps et de passages de vie intenses, m'ont profondément reliée à ce que traversent les familles. Devenir doula est devenu une évidence : mettre mon expérience, ma sensibilité et mon engagement au service des familles, avec douceur, justesse et humanité, dans les moments où tout peut vaciller. Aujourd'hui, je suis là pour éclairer sans diriger, et soutenir les familles afin qu'elles trouvent leurs propres repères.",
         "valeurs": [
             "Bienveillance",
             "Écoute",
@@ -24,6 +24,62 @@
             "Authenticité"
         ]
     },
+    "philosophie": {
+        "titre_approche": "Une approche humaine et personnalisée",
+        "texte_approche": "Ce qui rend mes accompagnements uniques, c'est l'écoute profonde. Je vous offre une présence engagée, fiable et sincère, qui soutient sans diriger et croit en vos ressources.",
+        "titre_passages": "Soutenir vos grands passages de vie",
+        "texte_passages": "J'accompagne les parents et futurs parents à travers les moments clés : désir d'enfant, grossesse, accouchement, post-partum, deuils périnataux, et passages de vie féminins. Mes services s'adressent à toutes les familles en quête d'écoute et de soutien émotionnel.",
+        "titre_confiance": "La confiance, votre plus belle ressource",
+        "texte_confiance": "Mon objectif est de vous aider à retrouver confiance en vos ressentis, en vos capacités parentales. Après mes accompagnements, vous vous sentirez légitimes, écoutés et respectés, prêts à avancer à votre rythme, sans pression ni jugement. C'est le cœur de Lumière de vie Doula Sévy.",
+        "titre_philosophie": "Ma philosophie d'accompagnement bienveillant",
+        "texte_philosophie": "Ma manière d'accompagner repose avant tout sur une conviction simple : chaque parent, chaque enfant, chaque famille porte déjà en elle ses propres ressources. Mon rôle n'est pas de dire quoi faire, mais d'être présente, d'écouter, de soutenir, et d'offrir un espace sécurisant où chacun peut déposer ce qu'il traverse. J'accompagne avec respect du rythme, sans injonctions, sans modèle unique, en m'adaptant à l'histoire, aux valeurs et au vécu de chaque famille. Mon approche est globale et humaine : elle prend en compte les émotions, le corps, les passages de vie, et la réalité du quotidien parental. Je crois profondément à l'importance de la relation, à la force de la parole, et à la présence silencieuse quand les mots manquent. Accompagner, pour moi, c'est marcher aux côtés, sans jamais prendre la place, en éclairant le chemin sans le diriger.",
+        "titre_engagement": "Confiance et sécurité : mon engagement pour vous",
+        "texte_engagement": "Ce qui me tient le plus à cœur, c'est d'offrir aux familles un espace de sécurité. Un espace où elles peuvent être pleinement elles-mêmes, sans masque, sans peur d'être jugées, sans avoir à correspondre à ce que l'on attend d'elles. Je souhaite avant tout transmettre la confiance : la confiance en leurs ressentis, en leurs intuitions, en leur capacité à faire au mieux pour leur enfant et pour eux-mêmes. J'ai à cœur de rappeler aux parents qu'ils ont le droit de douter, de tâtonner, de ne pas tout savoir, et que cela ne fait pas d'eux de « mauvais » parents. Ce que je souhaite laisser, c'est la sensation de ne plus être seuls, d'avoir été entendus dans leur histoire singulière, et d'avoir trouvé un soutien sincère dans les passages parfois fragiles de la parentalité. À travers mes accompagnements (incluant divers ateliers comme le portage, le massage bébé et enfants, le yoga bébé et enfant, la réflexologie, ainsi que des cercles de femmes enceintes ou en post-partum), je veux transmettre de la douceur, du respect, et cette idée essentielle : vous êtes déjà suffisamment compétents et légitimes."
+    },
+    "Accompagnements": [
+        {
+            "id": 1,
+            "icone": "🤝",
+            "titre": "Mes accompagnements pour chaque étape",
+            "description": "Je propose une gamme variée d'accompagnements pensés pour répondre à vos besoins spécifiques. Qu'il s'agisse de partager, d'apprendre ou de recevoir un soutien individuel, mes services sont conçus pour vous apporter sérénité et confiance.",
+            "actif": true
+        },
+        {
+            "id": 2,
+            "icone": "🌸",
+            "titre": "Soutien individuel",
+            "description": "Bénéficiez d'un accompagnement personnalisé pour le désir d'enfant, la grossesse, le post-partum ou les deuils périnataux.",
+            "actif": true
+        },
+        {
+            "id": 3,
+            "icone": "🧘",
+            "titre": "Ateliers pratiques",
+            "description": "Participez à mes ateliers thématiques : portage, massage bébé, yoga bébé/enfants et réflexologie. Des moments d'apprentissage et de partage essentiels.",
+            "actif": true
+        },
+        {
+            "id": 4,
+            "icone": "👥",
+            "titre": "Cercles de partage",
+            "description": "Rejoignez mes cercles de femmes enceintes ou en post-partum. Un espace sécurisant pour déposer ce que vous vivez et vous sentir moins seule.",
+            "actif": true
+        },
+        {
+            "id": 5,
+            "icone": "🌙",
+            "titre": "Suivi postnatal",
+            "description": "Le retour à la maison est une étape délicate. Je vous accompagne dans vos premiers jours avec bébé, à votre rythme et selon vos besoins.",
+            "actif": true
+        },
+        {
+            "id": 6,
+            "icone": "🤱",
+            "titre": "Accompagnement prénatal",
+            "description": "Des rencontres régulières pendant votre grossesse pour vous préparer en douceur, répondre à vos questions et nourrir votre confiance en vous.",
+            "actif": true
+        }
+    ],
     "services": [
         {
             "id": 1,
@@ -111,7 +167,7 @@
     ],
     "temoignages": [
         {
-            "texte": "Séverine, douce Sévy, est une Doula au grand cœur. Écoute, patience et douceur l’accompagnent au quotidien.\r\nPeu importe l’histoire traversée… pour Sévy chaque histoire est unique et mérite d’être écoutée, entendue et épaulée quand cela est nécessaire. Sans jugement, on se sent écoutée, rassurée, comprise.\r\nMerci Sévy.",
+            "texte": "Séverine, douce Sévy, est une Doula au grand cœur. Écoute, patience et douceur l'accompagnent au quotidien.\r\nPeu importe l'histoire traversée… pour Sévy chaque histoire est unique et mérite d'être écoutée, entendue et épaulée quand cela est nécessaire. Sans jugement, on se sent écoutée, rassurée, comprise.\r\nMerci Sévy.",
             "auteur": "Margaux Leroux",
             "detail": "Témoignage à compléter",
             "icone": "🌸",
@@ -119,7 +175,7 @@
             "id": 1
         },
         {
-            "texte": "Les personnes accompagnées par Séverine ont vraiment beaucoup de chance. Elle est douce, à l’écoute, et a une présence profondément rassurante. Elle est une doula attentive, respectueuse et très fiable. C’est une professionnelle de confiance, que je recommanderais sans hésiter.",
+            "texte": "Les personnes accompagnées par Séverine ont vraiment beaucoup de chance. Elle est douce, à l'écoute, et a une présence profondément rassurante. Elle est une doula attentive, respectueuse et très fiable. C'est une professionnelle de confiance, que je recommanderais sans hésiter.",
             "auteur": "Lindsey Robrecht",
             "detail": "",
             "icone": "🌷",
@@ -127,7 +183,7 @@
             "id": 2
         },
         {
-            "texte": "Doula Sévy, une doula que j’admire profondément pour la qualité de son écoute, sa grande justesse et la sagesse qu’elle dégage.\r\nSa présence est rare et précieuse, toujours enveloppante, rassurante, profondément humaine.\r\nVous pouvez vous tourner vers elle en tout confiance, elle fait partie de celles qui savent, qui soutiennent sans juger, qui sont là avec le cœur et le corps.\r\nUne présence sur laquelle on peut vraiment s’appuyer.",
+            "texte": "Doula Sévy, une doula que j'admire profondément pour la qualité de son écoute, sa grande justesse et la sagesse qu'elle dégage.\r\nSa présence est rare et précieuse, toujours enveloppante, rassurante, profondément humaine.\r\nVous pouvez vous tourner vers elle en tout confiance, elle fait partie de celles qui savent, qui soutiennent sans juger, qui sont là avec le cœur et le corps.\r\nUne présence sur laquelle on peut vraiment s'appuyer.",
             "auteur": "Marion Schlaeflin",
             "detail": "Témoignage à compléter",
             "icone": "🌻",
